@@ -13,7 +13,7 @@ class OrderMapperTest extends Specification {
     @Resource
     OrderMapper orderMapper
 
-    def 'hello() should return a named bean'() {
+    def 'orderMapper selectByPrimaryKey'() {
         when:
         def order = orderMapper.selectByPrimaryKey(4720875)
 
