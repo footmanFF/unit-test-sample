@@ -25,7 +25,7 @@ public class OrderEntity implements Serializable{
      */
     private Integer id;
     /**
-     * 订单类型；1：格格家订单，2：格格团订单，3：格格团全球购订单，4：环球捕手订单，5：燕网订单，6：b2b订单7手q 8云店
+     * 订单类型
      */
     private Integer type;
     /**
@@ -197,7 +197,7 @@ public class OrderEntity implements Serializable{
      */
     private Date updateTime;
     /**
-     * 使用的捕手币金额(单位为分  1捕手币＝100used_coin)
+     * 使用的币金额
      */
     private Integer usedCoin;
     

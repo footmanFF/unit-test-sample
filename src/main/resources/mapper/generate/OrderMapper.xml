@@ -5,7 +5,7 @@
 
     <resultMap id="BaseResultMap" type="com.footmanff.utsample.entity.OrderEntity">
         <id property="id" column="ID" /><!--订单id-->
-        <result property="type" column="TYPE" /><!--订单类型；1：格格家订单，2：格格团订单，3：格格团全球购订单，4：环球捕手订单，5：燕网订单，6：b2b订单7手q 8云店-->
+        <result property="type" column="TYPE" />
         <result property="sameBatchNumber" column="SAME_BATCH_NUMBER" /><!--同一批订单编号标识-->
         <result property="batchNumber" column="BATCH_NUMBER" /><!--合单批次编号，用于前台显示订单拆合-->
         <result property="number" column="NUMBER" /><!--订单编号，前端展示-->
@@ -48,7 +48,7 @@
         <result property="isMemberOrder" column="IS_MEMBER_ORDER" /><!--是否积分商品订单；0：否，1：是-->
         <result property="createTime" column="CREATE_TIME" /><!--创建时间-->
         <result property="updateTime" column="UPDATE_TIME" /><!--更新时间-->
-        <result property="usedCoin" column="USED_COIN" /><!--使用的捕手币金额(单位为分  1捕手币＝100used_coin)-->
+        <result property="usedCoin" column="USED_COIN" />
     </resultMap>
 
     <sql id="Base_Column_List">
