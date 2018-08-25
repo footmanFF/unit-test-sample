@@ -2,6 +2,7 @@ package com.footmanff.utsample.conf;
 
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.pool.DruidDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,14 +12,15 @@ import java.util.Arrays;
  * @author footmanff on 2018/8/24.
  */
 @Configuration
+@Slf4j
 public class DataSourceConf {
 
     public static final String MYSQL_SUFFIX = "?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&allowMultiQueries=true&tinyInt1isBit=false";
 
-    private String jdbcUrl = "jdbc:mysql://localhost:3306";
+    private String jdbcUrl = "jdbc:mysql://localhost:3306/ggj_ygg_sale_platform";
 
     private String username = "root";
-    
+
     private String password = "root";
 
     private Integer jdcdConnectInitSize = 20;
@@ -29,8 +31,8 @@ public class DataSourceConf {
 
     @Bean( initMethod = "init" )
     public DruidDataSource dataSource() {
-
-        try (DruidDataSource datasource = new DruidDataSource();) {
+        log.info("dataSource init start");
+        try (DruidDataSource datasource = new DruidDataSource()) {
             datasource.setUrl(jdbcUrl + MYSQL_SUFFIX);
             datasource.setUsername(username);
             datasource.setPassword(password);
@@ -57,9 +59,10 @@ public class DataSourceConf {
             statFilter.setSlowSqlMillis(200);
             statFilter.setLogSlowSql(true);
             datasource.setProxyFilters(Arrays.asList(statFilter));
+            log.info("dataSource init finish");
             return datasource;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("dataSource init error", e);
         }
         return null;
     }

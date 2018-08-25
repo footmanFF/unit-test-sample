@@ -15,11 +15,11 @@ import javax.sql.DataSource;
 /**
  * @author footmanff on 2018/8/24.
  */
-//@Configuration
-//@MapperScan( basePackages = "com.footmanff.utsample.mapper" )
+@Configuration
+@MapperScan( basePackages = "com.footmanff.utsample.mapper" )
 public class MybatisConf {
 
-    @Resource( name = "dataSource" ) 
+    @Resource
     private DataSource dataSource;
 
     @Bean

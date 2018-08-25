@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.footmanff.utsample.mapper.OrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.footmanff.utsample.entity.OrderEntity">
+        <id property="id" column="ID" /><!--订单id-->
+        <result property="type" column="TYPE" /><!--订单类型；1：格格家订单，2：格格团订单，3：格格团全球购订单，4：环球捕手订单，5：燕网订单，6：b2b订单7手q 8云店-->
+        <result property="sameBatchNumber" column="SAME_BATCH_NUMBER" /><!--同一批订单编号标识-->
+        <result property="batchNumber" column="BATCH_NUMBER" /><!--合单批次编号，用于前台显示订单拆合-->
+        <result property="number" column="NUMBER" /><!--订单编号，前端展示-->
+        <result property="sellerId" column="SELLER_ID" /><!--卖家id-->
+        <result property="accountId" column="ACCOUNT_ID" /><!--账号id-->
+        <result property="accountPoint" column="ACCOUNT_POINT" /><!--账号使用积分-->
+        <result property="accountCouponId" column="ACCOUNT_COUPON_ID" /><!--账号优惠券id-->
+        <result property="activitiesOptionalPartPrice" column="ACTIVITIES_OPTIONAL_PART_PRICE" /><!--N元活动优惠金额-->
+        <result property="couponPrice" column="COUPON_PRICE" /><!--优惠券金额-->
+        <result property="activitiesPrice" column="ACTIVITIES_PRICE" /><!--活动满减金额-->
+        <result property="clubCardManjianPrice" column="CLUB_CARD_MANJIAN_PRICE" /><!--会员卡满减金额-->
+        <result property="realPrice" column="REAL_PRICE" /><!--实付金额-->
+        <result property="adjustPrice" column="ADJUST_PRICE" /><!--客服调整金额，为正数，代表减少的价格-->
+        <result property="receiveAddressId" column="RECEIVE_ADDRESS_ID" /><!--收货地址id-->
+        <result property="orderSellerId" column="ORDER_SELLER_ID" /><!--订单商家id-->
+        <result property="totalPrice" column="TOTAL_PRICE" /><!--总价，包含运费-->
+        <result property="freightMoney" column="FREIGHT_MONEY" /><!--运费-->
+        <result property="totalDutyPrice" column="TOTAL_DUTY_PRICE" /><!--实付税费-->
+        <result property="sourceChannelId" column="SOURCE_CHANNEL_ID" /><!--订单来源渠道id-->
+        <result property="payChannel" column="PAY_CHANNEL" /><!--付款渠道；1：银联，2：支付宝，3：微信-->
+        <result property="appChannel" column="APP_CHANNEL" /><!--app渠道；0[ios及web]、1[其他]、2[360]、3[小米]、4[91]、5[百度]、6[豌豆荚]、7[应用宝]、8[淘宝]、9[vivo]、10[官网]、11[移动网站]、12[搜狗]、13[安智]、14[苏宁易购]、15[华为]、16[广点通-原生]、17[广点通-FEED流]、18[今日头条])、19IOS马甲app-->
+        <result property="appVersion" column="APP_VERSION" /><!--app版本-->
+        <result property="remark" column="REMARK" /><!--商家备注-->
+        <result property="remark2" column="REMARK2" /><!--客服备注-->
+        <result property="status" column="STATUS" /><!--订单状态；1：未付款，2：待发货，3：已发货，4：交易成功，5：用户取消（待退款团购），6：超时取消（已退款团购），7：团购进行中(团购)-->
+        <result property="operationStatus" column="OPERATION_STATUS" /><!--后台导出状态；0：未导出，1：已导出-->
+        <result property="checkStatus" column="CHECK_STATUS" /><!--客服审单状态；1：待审核，2：审核通过，3：审核不通过-->
+        <result property="payTime" column="PAY_TIME" /><!--付款时间-->
+        <result property="sendTime" column="SEND_TIME" /><!--发货时间-->
+        <result property="expireTime" column="EXPIRE_TIME" /><!--发货超时时间-->
+        <result property="isTimeout" column="IS_TIMEOUT" /><!--发货是否超时，1是，0否-->
+        <result property="receiveTime" column="RECEIVE_TIME" /><!--收货时间-->
+        <result property="isDelete" column="IS_DELETE" /><!--是否用户删除；0：否，1：是-->
+        <result property="isNeedSettlement" column="IS_NEED_SETTLEMENT" /><!--是否需要结算；0：否，1：是-->
+        <result property="isSettlement" column="IS_SETTLEMENT" /><!--是否结算；0：否，1：是-->
+        <result property="settlementTime" column="SETTLEMENT_TIME" /><!--订单结算时间-->
+        <result property="isFreeze" column="IS_FREEZE" /><!--冻结状态；0：未冻结，1：已冻结，2：已解冻-->
+        <result property="isAvailableCoupon" column="IS_AVAILABLE_COUPON" /><!--是否可用优惠券与积分；0：不可用，1：可用-->
+        <result property="isGroup" column="IS_GROUP" /><!--0：普通订单，1：团购订单，2会员订单-->
+        <result property="isMemberOrder" column="IS_MEMBER_ORDER" /><!--是否积分商品订单；0：否，1：是-->
+        <result property="createTime" column="CREATE_TIME" /><!--创建时间-->
+        <result property="updateTime" column="UPDATE_TIME" /><!--更新时间-->
+        <result property="usedCoin" column="USED_COIN" /><!--使用的捕手币金额(单位为分  1捕手币＝100used_coin)-->
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `ID` AS `id`,
+        `TYPE` AS `type`,
+        `SAME_BATCH_NUMBER` AS `SAME_BATCH_NUMBER`,
+        `BATCH_NUMBER` AS `batch_number`,
+        `NUMBER` AS `number`,
+        `SELLER_ID` AS `seller_id`,
+        `ACCOUNT_ID` AS `account_id`,
+        `ACCOUNT_POINT` AS `account_point`,
+        `ACCOUNT_COUPON_ID` AS `account_coupon_id`,
+        `ACTIVITIES_OPTIONAL_PART_PRICE` AS `activities_optional_part_price`,
+        `COUPON_PRICE` AS `coupon_price`,
+        `ACTIVITIES_PRICE` AS `activities_price`,
+        `CLUB_CARD_MANJIAN_PRICE` AS `club_card_manjian_price`,
+        `REAL_PRICE` AS `real_price`,
+        `ADJUST_PRICE` AS `adjust_price`,
+        `RECEIVE_ADDRESS_ID` AS `receive_address_id`,
+        `ORDER_SELLER_ID` AS `order_seller_id`,
+        `TOTAL_PRICE` AS `total_price`,
+        `FREIGHT_MONEY` AS `freight_money`,
+        `TOTAL_DUTY_PRICE` AS `total_duty_price`,
+        `SOURCE_CHANNEL_ID` AS `source_channel_id`,
+        `PAY_CHANNEL` AS `pay_channel`,
+        `APP_CHANNEL` AS `app_channel`,
+        `APP_VERSION` AS `app_version`,
+        `REMARK` AS `remark`,
+        `REMARK2` AS `remark2`,
+        `STATUS` AS `status`,
+        `OPERATION_STATUS` AS `operation_status`,
+        `CHECK_STATUS` AS `check_status`,
+        `PAY_TIME` AS `pay_time`,
+        `SEND_TIME` AS `send_time`,
+        `EXPIRE_TIME` AS `expire_time`,
+        `IS_TIMEOUT` AS `is_timeout`,
+        `RECEIVE_TIME` AS `receive_time`,
+        `IS_DELETE` AS `is_delete`,
+        `IS_NEED_SETTLEMENT` AS `is_need_settlement`,
+        `IS_SETTLEMENT` AS `is_settlement`,
+        `SETTLEMENT_TIME` AS `settlement_time`,
+        `IS_FREEZE` AS `is_freeze`,
+        `IS_AVAILABLE_COUPON` AS `is_available_coupon`,
+        `IS_GROUP` AS `is_group`,
+        `IS_MEMBER_ORDER` AS `is_member_order`,
+        `CREATE_TIME` AS `create_time`,
+        `UPDATE_TIME` AS `update_time`,
+        `USED_COIN` AS `used_coin`
+    </sql>
+
+    <sql id="idCnd">
+        <where>
+            <if test="id!=null" >ID=#{id,jdbcType=INTEGER}</if>
+            <if test="id==null">1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="com.footmanff.utsample.entity.OrderEntity" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        `order`
+        (
+        `ID`,
+        `TYPE`,
+        `SAME_BATCH_NUMBER`,
+        `BATCH_NUMBER`,
+        `NUMBER`,
+        `SELLER_ID`,
+        `ACCOUNT_ID`,
+        `ACCOUNT_POINT`,
+        `ACCOUNT_COUPON_ID`,
+        `ACTIVITIES_OPTIONAL_PART_PRICE`,
+        `COUPON_PRICE`,
+        `ACTIVITIES_PRICE`,
+        `CLUB_CARD_MANJIAN_PRICE`,
+        `REAL_PRICE`,
+        `ADJUST_PRICE`,
+        `RECEIVE_ADDRESS_ID`,
+        `ORDER_SELLER_ID`,
+        `TOTAL_PRICE`,
+        `FREIGHT_MONEY`,
+        `TOTAL_DUTY_PRICE`,
+        `SOURCE_CHANNEL_ID`,
+        `PAY_CHANNEL`,
+        `APP_CHANNEL`,
+        `APP_VERSION`,
+        `REMARK`,
+        `REMARK2`,
+        `STATUS`,
+        `OPERATION_STATUS`,
+        `CHECK_STATUS`,
+        `PAY_TIME`,
+        `SEND_TIME`,
+        `EXPIRE_TIME`,
+        `IS_TIMEOUT`,
+        `RECEIVE_TIME`,
+        `IS_DELETE`,
+        `IS_NEED_SETTLEMENT`,
+        `IS_SETTLEMENT`,
+        `SETTLEMENT_TIME`,
+        `IS_FREEZE`,
+        `IS_AVAILABLE_COUPON`,
+        `IS_GROUP`,
+        `IS_MEMBER_ORDER`,
+        `CREATE_TIME`,
+        `UPDATE_TIME`,
+        `USED_COIN`
+        ) VALUES
+        (
+        #{id,jdbcType=INTEGER},
+        #{type,jdbcType=TINYINT},
+        #{sameBatchNumber,jdbcType=BIGINT},
+        #{batchNumber,jdbcType=BIGINT},
+        #{number,jdbcType=BIGINT},
+        #{sellerId,jdbcType=INTEGER},
+        #{accountId,jdbcType=INTEGER},
+        #{accountPoint,jdbcType=INTEGER},
+        #{accountCouponId,jdbcType=INTEGER},
+        #{activitiesOptionalPartPrice,jdbcType=REAL},
+        #{couponPrice,jdbcType=REAL},
+        #{activitiesPrice,jdbcType=REAL},
+        #{clubCardManjianPrice,jdbcType=REAL},
+        #{realPrice,jdbcType=REAL},
+        #{adjustPrice,jdbcType=REAL},
+        #{receiveAddressId,jdbcType=INTEGER},
+        #{orderSellerId,jdbcType=INTEGER},
+        #{totalPrice,jdbcType=REAL},
+        #{freightMoney,jdbcType=SMALLINT},
+        #{totalDutyPrice,jdbcType=REAL},
+        #{sourceChannelId,jdbcType=INTEGER},
+        #{payChannel,jdbcType=TINYINT},
+        #{appChannel,jdbcType=TINYINT},
+        #{appVersion,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR},
+        #{remark2,jdbcType=VARCHAR},
+        #{status,jdbcType=TINYINT},
+        #{operationStatus,jdbcType=TINYINT},
+        #{checkStatus,jdbcType=TINYINT},
+        #{payTime,jdbcType=TIMESTAMP},
+        #{sendTime,jdbcType=TIMESTAMP},
+        #{expireTime,jdbcType=TIMESTAMP},
+        #{isTimeout,jdbcType=TINYINT},
+        #{receiveTime,jdbcType=TIMESTAMP},
+        #{isDelete,jdbcType=TINYINT},
+        #{isNeedSettlement,jdbcType=TINYINT},
+        #{isSettlement,jdbcType=TINYINT},
+        #{settlementTime,jdbcType=TIMESTAMP},
+        #{isFreeze,jdbcType=TINYINT},
+        #{isAvailableCoupon,jdbcType=TINYINT},
+        #{isGroup,jdbcType=TINYINT},
+        #{isMemberOrder,jdbcType=TINYINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{usedCoin,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.footmanff.utsample.entity.OrderEntity" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null" >`ID`,</if>
+            <if test="type!=null" >`TYPE`,</if>
+            <if test="sameBatchNumber!=null" >`SAME_BATCH_NUMBER`,</if>
+            <if test="batchNumber!=null" >`BATCH_NUMBER`,</if>
+            <if test="number!=null" >`NUMBER`,</if>
+            <if test="sellerId!=null" >`SELLER_ID`,</if>
+            <if test="accountId!=null" >`ACCOUNT_ID`,</if>
+            <if test="accountPoint!=null" >`ACCOUNT_POINT`,</if>
+            <if test="accountCouponId!=null" >`ACCOUNT_COUPON_ID`,</if>
+            <if test="activitiesOptionalPartPrice!=null" >`ACTIVITIES_OPTIONAL_PART_PRICE`,</if>
+            <if test="couponPrice!=null" >`COUPON_PRICE`,</if>
+            <if test="activitiesPrice!=null" >`ACTIVITIES_PRICE`,</if>
+            <if test="clubCardManjianPrice!=null" >`CLUB_CARD_MANJIAN_PRICE`,</if>
+            <if test="realPrice!=null" >`REAL_PRICE`,</if>
+            <if test="adjustPrice!=null" >`ADJUST_PRICE`,</if>
+            <if test="receiveAddressId!=null" >`RECEIVE_ADDRESS_ID`,</if>
+            <if test="orderSellerId!=null" >`ORDER_SELLER_ID`,</if>
+            <if test="totalPrice!=null" >`TOTAL_PRICE`,</if>
+            <if test="freightMoney!=null" >`FREIGHT_MONEY`,</if>
+            <if test="totalDutyPrice!=null" >`TOTAL_DUTY_PRICE`,</if>
+            <if test="sourceChannelId!=null" >`SOURCE_CHANNEL_ID`,</if>
+            <if test="payChannel!=null" >`PAY_CHANNEL`,</if>
+            <if test="appChannel!=null" >`APP_CHANNEL`,</if>
+            <if test="appVersion!=null" >`APP_VERSION`,</if>
+            <if test="remark!=null" >`REMARK`,</if>
+            <if test="remark2!=null" >`REMARK2`,</if>
+            <if test="status!=null" >`STATUS`,</if>
+            <if test="operationStatus!=null" >`OPERATION_STATUS`,</if>
+            <if test="checkStatus!=null" >`CHECK_STATUS`,</if>
+            <if test="payTime!=null" >`PAY_TIME`,</if>
+            <if test="sendTime!=null" >`SEND_TIME`,</if>
+            <if test="expireTime!=null" >`EXPIRE_TIME`,</if>
+            <if test="isTimeout!=null" >`IS_TIMEOUT`,</if>
+            <if test="receiveTime!=null" >`RECEIVE_TIME`,</if>
+            <if test="isDelete!=null" >`IS_DELETE`,</if>
+            <if test="isNeedSettlement!=null" >`IS_NEED_SETTLEMENT`,</if>
+            <if test="isSettlement!=null" >`IS_SETTLEMENT`,</if>
+            <if test="settlementTime!=null" >`SETTLEMENT_TIME`,</if>
+            <if test="isFreeze!=null" >`IS_FREEZE`,</if>
+            <if test="isAvailableCoupon!=null" >`IS_AVAILABLE_COUPON`,</if>
+            <if test="isGroup!=null" >`IS_GROUP`,</if>
+            <if test="isMemberOrder!=null" >`IS_MEMBER_ORDER`,</if>
+            <if test="createTime!=null" >`CREATE_TIME`,</if>
+            <if test="updateTime!=null" >`UPDATE_TIME`,</if>
+            <if test="usedCoin!=null" >`USED_COIN`</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null" >#{id,jdbcType=INTEGER},</if>
+            <if test="type!=null" >#{type,jdbcType=TINYINT},</if>
+            <if test="sameBatchNumber!=null" >#{sameBatchNumber,jdbcType=BIGINT},</if>
+            <if test="batchNumber!=null" >#{batchNumber,jdbcType=BIGINT},</if>
+            <if test="number!=null" >#{number,jdbcType=BIGINT},</if>
+            <if test="sellerId!=null" >#{sellerId,jdbcType=INTEGER},</if>
+            <if test="accountId!=null" >#{accountId,jdbcType=INTEGER},</if>
+            <if test="accountPoint!=null" >#{accountPoint,jdbcType=INTEGER},</if>
+            <if test="accountCouponId!=null" >#{accountCouponId,jdbcType=INTEGER},</if>
+            <if test="activitiesOptionalPartPrice!=null" >#{activitiesOptionalPartPrice,jdbcType=REAL},</if>
+            <if test="couponPrice!=null" >#{couponPrice,jdbcType=REAL},</if>
+            <if test="activitiesPrice!=null" >#{activitiesPrice,jdbcType=REAL},</if>
+            <if test="clubCardManjianPrice!=null" >#{clubCardManjianPrice,jdbcType=REAL},</if>
+            <if test="realPrice!=null" >#{realPrice,jdbcType=REAL},</if>
+            <if test="adjustPrice!=null" >#{adjustPrice,jdbcType=REAL},</if>
+            <if test="receiveAddressId!=null" >#{receiveAddressId,jdbcType=INTEGER},</if>
+            <if test="orderSellerId!=null" >#{orderSellerId,jdbcType=INTEGER},</if>
+            <if test="totalPrice!=null" >#{totalPrice,jdbcType=REAL},</if>
+            <if test="freightMoney!=null" >#{freightMoney,jdbcType=SMALLINT},</if>
+            <if test="totalDutyPrice!=null" >#{totalDutyPrice,jdbcType=REAL},</if>
+            <if test="sourceChannelId!=null" >#{sourceChannelId,jdbcType=INTEGER},</if>
+            <if test="payChannel!=null" >#{payChannel,jdbcType=TINYINT},</if>
+            <if test="appChannel!=null" >#{appChannel,jdbcType=TINYINT},</if>
+            <if test="appVersion!=null" >#{appVersion,jdbcType=VARCHAR},</if>
+            <if test="remark!=null" >#{remark,jdbcType=VARCHAR},</if>
+            <if test="remark2!=null" >#{remark2,jdbcType=VARCHAR},</if>
+            <if test="status!=null" >#{status,jdbcType=TINYINT},</if>
+            <if test="operationStatus!=null" >#{operationStatus,jdbcType=TINYINT},</if>
+            <if test="checkStatus!=null" >#{checkStatus,jdbcType=TINYINT},</if>
+            <if test="payTime!=null" >#{payTime,jdbcType=TIMESTAMP},</if>
+            <if test="sendTime!=null" >#{sendTime,jdbcType=TIMESTAMP},</if>
+            <if test="expireTime!=null" >#{expireTime,jdbcType=TIMESTAMP},</if>
+            <if test="isTimeout!=null" >#{isTimeout,jdbcType=TINYINT},</if>
+            <if test="receiveTime!=null" >#{receiveTime,jdbcType=TIMESTAMP},</if>
+            <if test="isDelete!=null" >#{isDelete,jdbcType=TINYINT},</if>
+            <if test="isNeedSettlement!=null" >#{isNeedSettlement,jdbcType=TINYINT},</if>
+            <if test="isSettlement!=null" >#{isSettlement,jdbcType=TINYINT},</if>
+            <if test="settlementTime!=null" >#{settlementTime,jdbcType=TIMESTAMP},</if>
+            <if test="isFreeze!=null" >#{isFreeze,jdbcType=TINYINT},</if>
+            <if test="isAvailableCoupon!=null" >#{isAvailableCoupon,jdbcType=TINYINT},</if>
+            <if test="isGroup!=null" >#{isGroup,jdbcType=TINYINT},</if>
+            <if test="isMemberOrder!=null" >#{isMemberOrder,jdbcType=TINYINT},</if>
+            <if test="createTime!=null" >#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime!=null" >#{updateTime,jdbcType=TIMESTAMP},</if>
+            <if test="usedCoin!=null" >#{usedCoin,jdbcType=INTEGER}</if>
+        </trim>
+    </insert>
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `order`
+        <include refid="idCnd" />
+    </delete>
+
+    <update id="updateByPrimaryKeySelective">
+        UPDATE `order`
+        <set>
+            <if test="id!=null" >`ID`=#{id,jdbcType=INTEGER},</if>
+            <if test="type!=null" >`TYPE`=#{type,jdbcType=TINYINT},</if>
+            <if test="sameBatchNumber!=null" >`SAME_BATCH_NUMBER`=#{sameBatchNumber,jdbcType=BIGINT},</if>
+            <if test="batchNumber!=null" >`BATCH_NUMBER`=#{batchNumber,jdbcType=BIGINT},</if>
+            <if test="number!=null" >`NUMBER`=#{number,jdbcType=BIGINT},</if>
+            <if test="sellerId!=null" >`SELLER_ID`=#{sellerId,jdbcType=INTEGER},</if>
+            <if test="accountId!=null" >`ACCOUNT_ID`=#{accountId,jdbcType=INTEGER},</if>
+            <if test="accountPoint!=null" >`ACCOUNT_POINT`=#{accountPoint,jdbcType=INTEGER},</if>
+            <if test="accountCouponId!=null" >`ACCOUNT_COUPON_ID`=#{accountCouponId,jdbcType=INTEGER},</if>
+            <if test="activitiesOptionalPartPrice!=null" >`ACTIVITIES_OPTIONAL_PART_PRICE`=#{activitiesOptionalPartPrice,jdbcType=REAL},</if>
+            <if test="couponPrice!=null" >`COUPON_PRICE`=#{couponPrice,jdbcType=REAL},</if>
+            <if test="activitiesPrice!=null" >`ACTIVITIES_PRICE`=#{activitiesPrice,jdbcType=REAL},</if>
+            <if test="clubCardManjianPrice!=null" >`CLUB_CARD_MANJIAN_PRICE`=#{clubCardManjianPrice,jdbcType=REAL},</if>
+            <if test="realPrice!=null" >`REAL_PRICE`=#{realPrice,jdbcType=REAL},</if>
+            <if test="adjustPrice!=null" >`ADJUST_PRICE`=#{adjustPrice,jdbcType=REAL},</if>
+            <if test="receiveAddressId!=null" >`RECEIVE_ADDRESS_ID`=#{receiveAddressId,jdbcType=INTEGER},</if>
+            <if test="orderSellerId!=null" >`ORDER_SELLER_ID`=#{orderSellerId,jdbcType=INTEGER},</if>
+            <if test="totalPrice!=null" >`TOTAL_PRICE`=#{totalPrice,jdbcType=REAL},</if>
+            <if test="freightMoney!=null" >`FREIGHT_MONEY`=#{freightMoney,jdbcType=SMALLINT},</if>
+            <if test="totalDutyPrice!=null" >`TOTAL_DUTY_PRICE`=#{totalDutyPrice,jdbcType=REAL},</if>
+            <if test="sourceChannelId!=null" >`SOURCE_CHANNEL_ID`=#{sourceChannelId,jdbcType=INTEGER},</if>
+            <if test="payChannel!=null" >`PAY_CHANNEL`=#{payChannel,jdbcType=TINYINT},</if>
+            <if test="appChannel!=null" >`APP_CHANNEL`=#{appChannel,jdbcType=TINYINT},</if>
+            <if test="appVersion!=null" >`APP_VERSION`=#{appVersion,jdbcType=VARCHAR},</if>
+            <if test="remark!=null" >`REMARK`=#{remark,jdbcType=VARCHAR},</if>
+            <if test="remark2!=null" >`REMARK2`=#{remark2,jdbcType=VARCHAR},</if>
+            <if test="status!=null" >`STATUS`=#{status,jdbcType=TINYINT},</if>
+            <if test="operationStatus!=null" >`OPERATION_STATUS`=#{operationStatus,jdbcType=TINYINT},</if>
+            <if test="checkStatus!=null" >`CHECK_STATUS`=#{checkStatus,jdbcType=TINYINT},</if>
+            <if test="payTime!=null" >`PAY_TIME`=#{payTime,jdbcType=TIMESTAMP},</if>
+            <if test="sendTime!=null" >`SEND_TIME`=#{sendTime,jdbcType=TIMESTAMP},</if>
+            <if test="expireTime!=null" >`EXPIRE_TIME`=#{expireTime,jdbcType=TIMESTAMP},</if>
+            <if test="isTimeout!=null" >`IS_TIMEOUT`=#{isTimeout,jdbcType=TINYINT},</if>
+            <if test="receiveTime!=null" >`RECEIVE_TIME`=#{receiveTime,jdbcType=TIMESTAMP},</if>
+            <if test="isDelete!=null" >`IS_DELETE`=#{isDelete,jdbcType=TINYINT},</if>
+            <if test="isNeedSettlement!=null" >`IS_NEED_SETTLEMENT`=#{isNeedSettlement,jdbcType=TINYINT},</if>
+            <if test="isSettlement!=null" >`IS_SETTLEMENT`=#{isSettlement,jdbcType=TINYINT},</if>
+            <if test="settlementTime!=null" >`SETTLEMENT_TIME`=#{settlementTime,jdbcType=TIMESTAMP},</if>
+            <if test="isFreeze!=null" >`IS_FREEZE`=#{isFreeze,jdbcType=TINYINT},</if>
+            <if test="isAvailableCoupon!=null" >`IS_AVAILABLE_COUPON`=#{isAvailableCoupon,jdbcType=TINYINT},</if>
+            <if test="isGroup!=null" >`IS_GROUP`=#{isGroup,jdbcType=TINYINT},</if>
+            <if test="isMemberOrder!=null" >`IS_MEMBER_ORDER`=#{isMemberOrder,jdbcType=TINYINT},</if>
+            <if test="createTime!=null" >`CREATE_TIME`=#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime!=null" >`UPDATE_TIME`=#{updateTime,jdbcType=TIMESTAMP},</if>
+            <if test="usedCoin!=null" >`USED_COIN`=#{usedCoin,jdbcType=INTEGER}</if>
+        </set>
+        <include refid="idCnd" />
+    </update>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        `order`
+        <include refid="idCnd" />
+    </select>
+
+
+    <sql id="where_clause">
+        <where>
+            <if test="id!=null" >`ID`=#{id,jdbcType=INTEGER}   </if>
+            <if test="type!=null" > AND `TYPE`=#{type,jdbcType=TINYINT}</if>
+            <if test="sameBatchNumber!=null" > AND `SAME_BATCH_NUMBER`=#{sameBatchNumber,jdbcType=BIGINT}</if>
+            <if test="batchNumber!=null" > AND `BATCH_NUMBER`=#{batchNumber,jdbcType=BIGINT}</if>
+            <if test="number!=null" > AND `NUMBER`=#{number,jdbcType=BIGINT}</if>
+            <if test="sellerId!=null" > AND `SELLER_ID`=#{sellerId,jdbcType=INTEGER}</if>
+            <if test="accountId!=null" > AND `ACCOUNT_ID`=#{accountId,jdbcType=INTEGER}</if>
+            <if test="accountPoint!=null" > AND `ACCOUNT_POINT`=#{accountPoint,jdbcType=INTEGER}</if>
+            <if test="accountCouponId!=null" > AND `ACCOUNT_COUPON_ID`=#{accountCouponId,jdbcType=INTEGER}</if>
+            <if test="activitiesOptionalPartPrice!=null" > AND `ACTIVITIES_OPTIONAL_PART_PRICE`=#{activitiesOptionalPartPrice,jdbcType=REAL}</if>
+            <if test="couponPrice!=null" > AND `COUPON_PRICE`=#{couponPrice,jdbcType=REAL}</if>
+            <if test="activitiesPrice!=null" > AND `ACTIVITIES_PRICE`=#{activitiesPrice,jdbcType=REAL}</if>
+            <if test="clubCardManjianPrice!=null" > AND `CLUB_CARD_MANJIAN_PRICE`=#{clubCardManjianPrice,jdbcType=REAL}</if>
+            <if test="realPrice!=null" > AND `REAL_PRICE`=#{realPrice,jdbcType=REAL}</if>
+            <if test="adjustPrice!=null" > AND `ADJUST_PRICE`=#{adjustPrice,jdbcType=REAL}</if>
+            <if test="receiveAddressId!=null" > AND `RECEIVE_ADDRESS_ID`=#{receiveAddressId,jdbcType=INTEGER}</if>
+            <if test="orderSellerId!=null" > AND `ORDER_SELLER_ID`=#{orderSellerId,jdbcType=INTEGER}</if>
+            <if test="totalPrice!=null" > AND `TOTAL_PRICE`=#{totalPrice,jdbcType=REAL}</if>
+            <if test="freightMoney!=null" > AND `FREIGHT_MONEY`=#{freightMoney,jdbcType=SMALLINT}</if>
+            <if test="totalDutyPrice!=null" > AND `TOTAL_DUTY_PRICE`=#{totalDutyPrice,jdbcType=REAL}</if>
+            <if test="sourceChannelId!=null" > AND `SOURCE_CHANNEL_ID`=#{sourceChannelId,jdbcType=INTEGER}</if>
+            <if test="payChannel!=null" > AND `PAY_CHANNEL`=#{payChannel,jdbcType=TINYINT}</if>
+            <if test="appChannel!=null" > AND `APP_CHANNEL`=#{appChannel,jdbcType=TINYINT}</if>
+            <if test="appVersion!=null" > AND `APP_VERSION`=#{appVersion,jdbcType=VARCHAR}</if>
+            <if test="remark!=null" > AND `REMARK`=#{remark,jdbcType=VARCHAR}</if>
+            <if test="remark2!=null" > AND `REMARK2`=#{remark2,jdbcType=VARCHAR}</if>
+            <if test="status!=null" > AND `STATUS`=#{status,jdbcType=TINYINT}</if>
+            <if test="operationStatus!=null" > AND `OPERATION_STATUS`=#{operationStatus,jdbcType=TINYINT}</if>
+            <if test="checkStatus!=null" > AND `CHECK_STATUS`=#{checkStatus,jdbcType=TINYINT}</if>
+            <if test="payTime!=null" > AND `PAY_TIME`=#{payTime,jdbcType=TIMESTAMP}</if>
+            <if test="sendTime!=null" > AND `SEND_TIME`=#{sendTime,jdbcType=TIMESTAMP}</if>
+            <if test="expireTime!=null" > AND `EXPIRE_TIME`=#{expireTime,jdbcType=TIMESTAMP}</if>
+            <if test="isTimeout!=null" > AND `IS_TIMEOUT`=#{isTimeout,jdbcType=TINYINT}</if>
+            <if test="receiveTime!=null" > AND `RECEIVE_TIME`=#{receiveTime,jdbcType=TIMESTAMP}</if>
+            <if test="isDelete!=null" > AND `IS_DELETE`=#{isDelete,jdbcType=TINYINT}</if>
+            <if test="isNeedSettlement!=null" > AND `IS_NEED_SETTLEMENT`=#{isNeedSettlement,jdbcType=TINYINT}</if>
+            <if test="isSettlement!=null" > AND `IS_SETTLEMENT`=#{isSettlement,jdbcType=TINYINT}</if>
+            <if test="settlementTime!=null" > AND `SETTLEMENT_TIME`=#{settlementTime,jdbcType=TIMESTAMP}</if>
+            <if test="isFreeze!=null" > AND `IS_FREEZE`=#{isFreeze,jdbcType=TINYINT}</if>
+            <if test="isAvailableCoupon!=null" > AND `IS_AVAILABLE_COUPON`=#{isAvailableCoupon,jdbcType=TINYINT}</if>
+            <if test="isGroup!=null" > AND `IS_GROUP`=#{isGroup,jdbcType=TINYINT}</if>
+            <if test="isMemberOrder!=null" > AND `IS_MEMBER_ORDER`=#{isMemberOrder,jdbcType=TINYINT}</if>
+            <if test="createTime!=null" > AND `CREATE_TIME`=#{createTime,jdbcType=TIMESTAMP}</if>
+            <if test="updateTime!=null" > AND `UPDATE_TIME`=#{updateTime,jdbcType=TIMESTAMP}</if>
+            <if test="usedCoin!=null" > AND `USED_COIN`=#{usedCoin,jdbcType=INTEGER}</if>
+        </where>
+    </sql>
+
+    <select id="selectListByParams" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        `order`
+        <include refid="where_clause" />
+    </select>
+</mapper>
+
