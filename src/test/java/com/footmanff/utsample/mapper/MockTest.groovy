@@ -14,7 +14,7 @@ import javax.annotation.Resource
  * @author footmanff on 2018/8/29.
  */
 @SpringBootTest
-class MockTest2 extends Specification {
+class MockTest extends Specification {
 
     @Resource
     SomeService someService
