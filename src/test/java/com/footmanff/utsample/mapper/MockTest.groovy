@@ -31,7 +31,7 @@ class MockTest extends Specification {
         println("value: " + value)
 
         then:
-        1 == 1
+        value == "[OtherService.method]-[2]-[someDependenceService.dependMethod result]"
     }
 
     @TestConfiguration

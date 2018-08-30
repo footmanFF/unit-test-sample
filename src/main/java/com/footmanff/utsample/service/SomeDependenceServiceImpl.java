@@ -10,7 +10,7 @@ public class SomeDependenceServiceImpl implements SomeDependenceService {
 
     @Override
     public String dependMethod() {
-        return ""; // to be mocked
+        return "haha"; // to be mocked
     }
     
 }
